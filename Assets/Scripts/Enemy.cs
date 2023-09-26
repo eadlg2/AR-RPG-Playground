@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
         System.Random rnd = new System.Random();
         int playerNum = rnd.Next(1, 2);
 
-        GameObject playerObj = GameObject.Find("Player" + playerNum);
+        GameObject playerObj = GameObject.Find("Player " + playerNum);
         Player player = playerObj.GetComponent<Player>();
 
         int attackVal = atk - player.def;

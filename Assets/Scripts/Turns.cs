@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Turns : MonoBehaviour
 {
@@ -18,12 +18,14 @@ public class Turns : MonoBehaviour
     {
         if (players[0].spe > players[1].spe)
         {
-            button.clicked += (players[0].Attack);
+            playerTurns = 1;
+            button.onClick.AddListener(players[0].Attack);
             activePlayer = players[0];
         }
         else
         {
-            button.clicked += players[1].Attack;
+            playerTurns = 1;
+            button.onClick.AddListener(players[1].Attack);
             activePlayer = players[1];
         }
     }
@@ -34,12 +36,14 @@ public class Turns : MonoBehaviour
         
     }
 
-    void setActiveCharacter()
+    public void setActiveCharacter()
     {
+        button.onClick.RemoveAllListeners();
+
         if (playerTurns == 2)
         {
             playerTurns = 0;
-            button.clicked += enemy.Attack;
+            button.onClick.AddListener(enemy.Attack);
         }
         else
         {
@@ -47,12 +51,12 @@ public class Turns : MonoBehaviour
 
             if (activePlayer == players[0])
             {
-                button.clicked += players[1].Attack;
+                button.onClick.AddListener(players[1].Attack);
                 activePlayer = players[1];
             }
             else
             {
-                button.clicked += players[0].Attack;
+                button.onClick.AddListener(players[0].Attack);
                 activePlayer = players[0];
             }
         }
