@@ -59,6 +59,8 @@ public class Player : MonoBehaviour
             attackVal -= enemy.mdef;
         }
 
+        if (attackVal < 0) { attackVal = 0; }
+
         enemy.hp -= attackVal;
 
         Debug.Log(enemy.hp);
