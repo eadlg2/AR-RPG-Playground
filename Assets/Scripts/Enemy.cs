@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,7 +15,11 @@ public class Enemy : MonoBehaviour
     private int atk;
     public int pdef;
     public int mdef;
-    private int spe;
+    public int spe;
+
+    public int turnSpeed;
+
+    [SerializeField] private Slider healthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -34,16 +39,30 @@ public class Enemy : MonoBehaviour
             case Class.Dragon:
                 hp = 30; atk = 4; pdef = 3; mdef = 3; spe = 2; break;
         }
+
+        healthBar.maxValue = hp;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        healthBar.value = hp;
     }
 
-    void Attack()
+    public void Attack()
     {
+        System.Random rnd = new System.Random();
+        int playerNum = rnd.Next(1, 2);
 
+        GameObject playerObj = GameObject.Find("Player" + playerNum);
+        Player player = playerObj.GetComponent<Player>();
+
+        int attackVal = atk - player.def;
+
+        if (attackVal < 0) { attackVal = 0; }
+
+        player.hp -= attackVal;
+
+        Debug.Log(player.hp);
     }
 }

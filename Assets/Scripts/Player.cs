@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,9 +14,13 @@ public class Player : MonoBehaviour
     public int hp;
     private int atk;
     public int def;
-    private int spe;
+    public int spe;
+
+    public int turnSpeed;
 
     private char attackType;
+
+    [SerializeField] private Slider healthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -35,12 +40,14 @@ public class Player : MonoBehaviour
             case Class.Barbarian:
                 hp = 8; atk = 3; def = 1; spe = 2; attackType = 'P'; break;
         }
+
+        healthBar.maxValue = hp;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        healthBar.value = hp;
     }
 
     public void Attack()
