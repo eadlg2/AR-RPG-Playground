@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
     public void Attack()
     {
         System.Random rnd = new System.Random();
-        int playerNum = rnd.Next(1, 2);
+        int playerNum = rnd.Next(1, 3);
 
         GameObject playerObj = GameObject.Find("Player " + playerNum);
         Player player = playerObj.GetComponent<Player>();
