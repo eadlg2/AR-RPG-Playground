@@ -17,9 +17,11 @@ public class Enemy : MonoBehaviour
     public int mdef;
     public int spe;
 
+    public int turnHP;
     public int turnSpeed;
 
     [SerializeField] private Slider healthBar;
+    [SerializeField] private Text healthText;
 
     // Start is called before the first frame update
     void Start()
@@ -40,29 +42,50 @@ public class Enemy : MonoBehaviour
                 hp = 30; atk = 4; pdef = 3; mdef = 3; spe = 2; break;
         }
 
+        turnHP = hp;
+        turnSpeed = spe;
         healthBar.maxValue = hp;
+        healthText.text = turnHP.ToString() + "/" + hp.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
         healthBar.value = hp;
+        healthText.text = turnHP.ToString() + "/" + hp.ToString();
     }
 
     public void Attack()
     {
-        System.Random rnd = new System.Random();
-        int playerNum = rnd.Next(1, 3);
+        if (turnSpeed >= 2)
+        {
+            System.Random rnd = new System.Random();
+            int playerNum = rnd.Next(1, 3);
 
-        GameObject playerObj = GameObject.Find("Player " + playerNum);
-        Player player = playerObj.GetComponent<Player>();
+            GameObject playerObj = GameObject.Find("Player " + playerNum);
+            Player player = playerObj.GetComponent<Player>();
 
-        int attackVal = atk - player.def;
+            if (player.hp <= 0)
+            {
+                if (playerNum == 1)
+                {
+                    playerObj = GameObject.Find("Player " + 2);
+                    player = playerObj.GetComponent<Player>();
+                }
+                else
+                {
+                    playerObj = GameObject.Find("Player " + 1);
+                    player = playerObj.GetComponent<Player>();
+                }
+            }
 
-        if (attackVal < 0) { attackVal = 0; }
+            int attackVal = atk - player.def;
 
-        player.hp -= attackVal;
+            if (attackVal < 0) { attackVal = 0; }
 
-        Debug.Log(player.hp);
+            player.turnHP -= attackVal;
+
+            turnSpeed -= 2;
+        }
     }
 }

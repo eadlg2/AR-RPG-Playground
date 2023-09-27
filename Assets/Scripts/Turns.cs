@@ -16,7 +16,7 @@ public class Turns : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (players[0].spe > players[1].spe)
+        if (players[0].turnSpeed > players[1].turnSpeed)
         {
             playerTurns = 1;
             button.onClick.AddListener(players[0].Attack);
@@ -43,10 +43,13 @@ public class Turns : MonoBehaviour
         if (playerTurns == 2)
         {
             playerTurns = 0;
-            button.onClick.AddListener(enemy.Attack);
+            enemy.Attack();
+            setActiveCharacter();
         }
         else
         {
+            if (playerTurns == 0) { enemy.turnSpeed += enemy.spe; players[0].turnSpeed += players[0].spe; players[1].turnSpeed += players[1].spe; }
+
             playerTurns += 1;
 
             if (activePlayer == players[0])
