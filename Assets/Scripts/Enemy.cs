@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Class enemyClass;
 
-    public int hp;
+    private int hp;
     private int atk;
     public int pdef;
     public int mdef;
@@ -21,7 +22,9 @@ public class Enemy : MonoBehaviour
     public int turnSpeed;
 
     [SerializeField] private Slider healthBar;
-    [SerializeField] private Text healthText;
+    [SerializeField] private TextMeshProUGUI healthText;
+
+    private TextMeshPro speedText;
 
     // Start is called before the first frame update
     void Start()
@@ -41,9 +44,12 @@ public class Enemy : MonoBehaviour
             case Class.Dragon:
                 hp = 30; atk = 4; pdef = 3; mdef = 3; spe = 2; break;
         }
+        
+        speedText = gameObject.GetComponentInChildren<TextMeshPro>();
 
         turnHP = hp;
         turnSpeed = spe;
+        speedText.text = "Speed: " + turnSpeed.ToString();
         healthBar.maxValue = hp;
         healthText.text = turnHP.ToString() + "/" + hp.ToString();
     }
@@ -51,13 +57,14 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBar.value = hp;
+        speedText.text = "Speed: " + turnSpeed.ToString();
+        healthBar.value = turnHP;
         healthText.text = turnHP.ToString() + "/" + hp.ToString();
     }
 
     public void Attack()
     {
-        if (turnSpeed >= 2)
+        while (turnSpeed >= 2)
         {
             System.Random rnd = new System.Random();
             int playerNum = rnd.Next(1, 3);
@@ -65,7 +72,7 @@ public class Enemy : MonoBehaviour
             GameObject playerObj = GameObject.Find("Player " + playerNum);
             Player player = playerObj.GetComponent<Player>();
 
-            if (player.hp <= 0)
+            if (player.turnHP <= 0)
             {
                 if (playerNum == 1)
                 {

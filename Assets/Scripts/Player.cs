@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Class playerClass;
 
-    public int hp;
+    private int hp;
     private int atk;
     public int def;
     public int spe;
@@ -23,7 +23,9 @@ public class Player : MonoBehaviour
     private char attackType;
 
     [SerializeField] private Slider healthBar;
-    [SerializeField] private Text healthText;
+    [SerializeField] private TextMeshProUGUI healthText;
+
+    public TextMeshPro speedText;
 
     // Start is called before the first frame update
     void Start()
@@ -44,8 +46,11 @@ public class Player : MonoBehaviour
                 hp = 8; atk = 3; def = 1; spe = 2; attackType = 'P'; break;
         }
 
+        speedText = gameObject.GetComponentInChildren<TextMeshPro>();
+        
         turnHP = hp;
         turnSpeed = spe;
+        speedText.text = "Speed: " + turnSpeed.ToString();
         healthBar.maxValue = hp;
         healthText.text = turnHP.ToString() + "/" + hp.ToString();
     }
@@ -53,7 +58,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBar.value = hp;
+        speedText.text = "Speed: " + turnSpeed.ToString();
+        healthBar.value = turnHP;
         healthText.text = turnHP.ToString() + "/" + hp.ToString();
     }
 
