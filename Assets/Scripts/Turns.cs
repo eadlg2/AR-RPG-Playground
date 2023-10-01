@@ -10,12 +10,16 @@ public class Turns : MonoBehaviour
     [SerializeField] private List<Player> players;
     [SerializeField] private Enemy enemy;
 
-    [SerializeField] private Button button;
+    [SerializeField] private Button attackButton;
+    [SerializeField] private Button supportButton;
 
     [SerializeField] private TextMeshProUGUI turnText;
 
     private Player activePlayer;
     private int playerTurns;
+
+    private int p1SupportVal;
+    private int p2SupportVal;
 
     // Start is called before the first frame update
     void Start()
@@ -23,14 +27,16 @@ public class Turns : MonoBehaviour
         if (players[0].turnSpeed >= players[1].turnSpeed)
         {
             playerTurns = 1;
-            button.onClick.AddListener(players[0].Attack);
+            attackButton.onClick.AddListener(players[0].Attack);
+            supportButton.onClick.AddListener(P1Support);
             activePlayer = players[0];
             turnText.text = "Player 1's Turn";
         }
         else
         {
             playerTurns = 1;
-            button.onClick.AddListener(players[1].Attack);
+            attackButton.onClick.AddListener(players[1].Attack);
+            supportButton.onClick.AddListener(P2Support);
             activePlayer = players[1];
             turnText.text = "Player 2's Turn";
         }
@@ -39,12 +45,13 @@ public class Turns : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SetActiveCharacter()
     {
-        button.onClick.RemoveAllListeners();
+        attackButton.onClick.RemoveAllListeners();
+        supportButton.onClick.RemoveAllListeners();
 
         if (playerTurns == 2)
         {
@@ -64,14 +71,16 @@ public class Turns : MonoBehaviour
             if (players[0].turnSpeed >= players[1].turnSpeed)
             {
                 playerTurns = 1;
-                button.onClick.AddListener(players[0].Attack);
+                attackButton.onClick.AddListener(players[0].Attack);
+                supportButton.onClick.AddListener(P1Support);
                 activePlayer = players[0];
                 turnText.text = "Player 1's Turn";
             }
             else
             {
                 playerTurns = 1;
-                button.onClick.AddListener(players[1].Attack);
+                attackButton.onClick.AddListener(players[1].Attack);
+                supportButton.onClick.AddListener(P2Support);
                 activePlayer = players[1];
                 turnText.text = "Player 2's Turn";
             }
@@ -82,17 +91,28 @@ public class Turns : MonoBehaviour
 
             if (activePlayer == players[0])
             {
-                button.onClick.AddListener(players[1].Attack);
+                attackButton.onClick.AddListener(players[1].Attack);
+                supportButton.onClick.AddListener(P2Support);
                 activePlayer = players[1];
                 turnText.text = "Player 2's Turn";
             }
             else
             {
-                button.onClick.AddListener(players[0].Attack);
+                attackButton.onClick.AddListener(players[0].Attack);
+                supportButton.onClick.AddListener(P1Support);
                 activePlayer = players[0];
                 turnText.text = "Player 1's Turn";
             }
         }
+    }
 
+    public void P1Support()
+    {
+        players[0].Support(ref p1SupportVal);
+    }
+
+    public void P2Support()
+    {
+        players[1].Support(ref p2SupportVal);
     }
 }
