@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Player partner;
 
     private int hp;
-    private int atk;
+    public int atk;
     public int def;
     public int spe;
 
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
             GameObject enemyObj = GameObject.Find("Enemy");
             Enemy enemy = enemyObj.GetComponent<Enemy>();
 
-            int attackVal = atk;
+            int attackVal = turnAtk;
 
             if (attackType == 'P')
             {
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Support(ref int support)
+    public void Support(ref int support, ref int count)
     {
         if (turnSpeed >= 2)
         {
@@ -115,26 +115,28 @@ public class Player : MonoBehaviour
                     ++turnDef;
                     ++partner.turnDef;
 
-                    support = 0;
+                    support = 1;
+                    ++count;
 
                     break;
                 case Class.Wizard:
                     turnHP -= 2;
                     partner.turnHP -= 2;
 
-                    turnAtk *= 2;
-
-                    support = 1;
+                    support = 2;
+                    ++count;
 
                     break;
                 case Class.Cleric:
                     turnHP += 2;
                     partner.turnHP += 2;
 
+                    support = 0;
+
                     break;
                 case Class.Rogue:
-                    turnSpeed += 2;
-                    partner.turnSpeed += 2;
+                    support = 3;
+                    ++count;
 
                     break;
                 case Class.Bard:
@@ -147,15 +149,13 @@ public class Player : MonoBehaviour
                     ++turnSpeed;
                     ++partner.turnSpeed;
 
-                    support = 2;
+                    support = 4;
+                    ++count;
 
                     break;
                 case Class.Barbarian:
-                    turnDef -= 2;
-
-                    turnAtk += 2;
-
-                    support = 3;
+                    support = 4;
+                    ++count;
 
                     break;
             }
