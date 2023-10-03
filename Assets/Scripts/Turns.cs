@@ -17,6 +17,7 @@ public class Turns : MonoBehaviour
 
     private Player activePlayer;
     private int playerTurns;
+    private int maxPlayerTurns;
 
     private int p1SupportVal = 0;
     private int p1SupportCount = 0;
@@ -27,26 +28,9 @@ public class Turns : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (players[0].turnSpeed >= players[1].turnSpeed)
-        {
-            playerTurns = 1;
-            attackButton.onClick.AddListener(players[0].Attack);
-            supportButton.onClick.AddListener(P1Support);
-            activePlayer = players[0];
-            turnText.text = "Player 1's Turn";
-            RevertSupport(0);
-            p1SupportCount = 0;
-        }
-        else
-        {
-            playerTurns = 1;
-            attackButton.onClick.AddListener(players[1].Attack);
-            supportButton.onClick.AddListener(P2Support);
-            activePlayer = players[1];
-            turnText.text = "Player 2's Turn";
-            RevertSupport(1);
-            p2SupportCount = 0;
-        }
+        playerTurns = 0;
+        maxPlayerTurns = 2;
+        SelectPlayer(true);
     }
 
     // Update is called once per frame
@@ -60,65 +44,69 @@ public class Turns : MonoBehaviour
         attackButton.onClick.RemoveAllListeners();
         supportButton.onClick.RemoveAllListeners();
 
-        if (playerTurns == 2)
+        if (playerTurns == maxPlayerTurns)
         {
             turnText.text = "Enemy's Turn";
             playerTurns = 0;
             enemy.Attack();
             SetActiveCharacter();
         }
-        else if (playerTurns == 0)
+        else
+        {
+            SelectPlayer();
+        }
+    }
+
+    public void SelectPlayer(bool start = false)
+    {
+        if (!start && playerTurns == 0)
         {
             enemy.turnSpeed += enemy.spe;
             players[0].turnSpeed += players[0].spe;
             players[1].turnSpeed += players[1].spe;
+        }
 
-            playerTurns += 1;
+        bool select = false;
 
-            if (players[0].turnSpeed >= players[1].turnSpeed)
-            {
-                playerTurns = 1;
-                attackButton.onClick.AddListener(players[0].Attack);
-                supportButton.onClick.AddListener(P1Support);
-                activePlayer = players[0];
-                turnText.text = "Player 1's Turn";
-                RevertSupport(0);
-                p1SupportCount = 0;
-            }
-            else
-            {
-                playerTurns = 1;
-                attackButton.onClick.AddListener(players[1].Attack);
-                supportButton.onClick.AddListener(P2Support);
-                activePlayer = players[1];
-                turnText.text = "Player 2's Turn";
-                RevertSupport(1);
-                p2SupportCount = 0;
-            }
+        if (players[0].dead)
+        {
+            select = false;
+            maxPlayerTurns = 1;
+        }
+        else if (players[1].dead)
+        {
+            select = true;
+            maxPlayerTurns = 1;
+        }
+        else if (playerTurns == 0)
+        {
+            select = players[0].turnSpeed >= players[1].turnSpeed;
         }
         else
         {
-            playerTurns += 1;
-
-            if (activePlayer == players[0])
-            {
-                attackButton.onClick.AddListener(players[1].Attack);
-                supportButton.onClick.AddListener(P2Support);
-                activePlayer = players[1];
-                turnText.text = "Player 2's Turn";
-                RevertSupport(1);
-                p2SupportCount = 0;
-            }
-            else
-            {
-                attackButton.onClick.AddListener(players[0].Attack);
-                supportButton.onClick.AddListener(P1Support);
-                activePlayer = players[0];
-                turnText.text = "Player 1's Turn";
-                RevertSupport(0);
-                p1SupportCount = 0;
-            }
+            select = activePlayer == players[1];
         }
+
+        if (select)
+        {
+            attackButton.onClick.AddListener(players[0].Attack);
+            supportButton.onClick.AddListener(P1Support);
+            activePlayer = players[0];
+            turnText.text = "Player 1's Turn";
+            RevertSupport(0);
+            p1SupportCount = 0;
+        }
+        else
+        {
+            attackButton.onClick.AddListener(players[1].Attack);
+            supportButton.onClick.AddListener(P2Support);
+            activePlayer = players[1];
+            turnText.text = "Player 2's Turn";
+            RevertSupport(1);
+            p2SupportCount = 0;
+        }
+
+        ++playerTurns;
     }
 
     public void P1Support()

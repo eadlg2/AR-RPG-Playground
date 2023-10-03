@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    enum Class { Paladin, Wizard, Cleric, Rogue, Bard, Barbarian}
+    enum Class { Paladin, Wizard, Cleric, Rogue, Bard, Barbarian }
 
     [SerializeField]
     private Class playerClass;
@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     public int turnSpeed;
 
     private char attackType;
+
+    public bool dead;
 
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI healthText;
@@ -100,6 +102,8 @@ public class Player : MonoBehaviour
             {
                 enemy.turnHP -= attackVal;
             }
+
+            if (enemy.turnHP <= 0) { enemy.dead = true; }
 
             turnSpeed -= 2;
         }

@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     public int turnHP;
     public int turnSpeed;
 
+    public bool dead;
+
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI healthText;
 
@@ -71,7 +73,7 @@ public class Enemy : MonoBehaviour
             GameObject playerObj = GameObject.Find("Player " + playerNum);
             Player player = playerObj.GetComponent<Player>();
 
-            if (player.turnHP <= 0)
+            if (player.dead)
             {
                 if (playerNum == 1)
                 {
@@ -97,6 +99,8 @@ public class Enemy : MonoBehaviour
             {
                 player.turnHP -= attackVal;
             }
+
+            if (player.turnHP <= 0) { player.dead = true; }
 
             turnSpeed -= 2;
         }
