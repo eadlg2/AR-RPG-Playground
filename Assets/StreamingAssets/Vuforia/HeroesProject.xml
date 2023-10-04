@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="wizard" size="1.000000 0.998004" />
+    <ImageTarget name="rogue" size="1.000000 0.998004" />
+    <ImageTarget name="paladin" size="1.000000 0.998004" />
+    <ImageTarget name="cleric" size="1.000000 0.998004" />
+    <ImageTarget name="bard" size="1.000000 0.998004" />
+    <ImageTarget name="barbarian" size="1.000000 0.998004" />
+  </Tracking>
+</QCARConfig>
