@@ -8,13 +8,22 @@ public class ConfirmSelection : MonoBehaviour
     [SerializeField] private GameObject targetParent;
     [SerializeField] private GameObject otherTargets;
     [SerializeField] private GameObject current;
-    [SerializeField] private GameObject final;
+    [SerializeField] private GameObject next;
 
     public void Confirm()
     {
         targetParent.SetActive(false);
-        otherTargets.SetActive(true);
+
+        if (otherTargets != null)
+        {
+            otherTargets.SetActive(true);
+        }
+
         current.SetActive(false);
-        final.SetActive(true);
+
+        if (next != null)
+        {
+            next.SetActive(true);
+        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public enum Class { Paladin, Wizard, Cleric, Rogue, Bard, Barbarian }
+    public enum Class { Paladin, Wizard, Cleric, Rogue, Bard, Barbarian, None }
 
     public Class playerClass;
 

@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    enum Class { Goblin, Golem, Zombie, Spirit, Vampire, Dragon }
+    public enum Class { Goblin, Golem, Zombie, Spirit, Vampire, Dragon, None }
 
-    [SerializeField]
-    private Class enemyClass;
+    public Class enemyClass;
 
     private int hp;
     private int atk;
@@ -30,6 +29,11 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void SetupEnemy()
+    {
         switch (enemyClass)
         {
             case Class.Goblin:
@@ -45,7 +49,7 @@ public class Enemy : MonoBehaviour
             case Class.Dragon:
                 hp = 30; atk = 4; pdef = 3; mdef = 3; spe = 2; break;
         }
-        
+
         speedText = gameObject.GetComponentInChildren<TextMeshPro>();
 
         turnHP = hp;
