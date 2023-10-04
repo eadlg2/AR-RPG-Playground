@@ -13,8 +13,5 @@ public class CharacterSelection : MonoBehaviour
     {
         Player player = entity.GetComponent<Player>();
         player.playerClass = newPlayerClass;
-
-        entity.transform.parent = gameObject.transform;
-        entity.transform.position = gameObject.transform.position;
     }
 }
