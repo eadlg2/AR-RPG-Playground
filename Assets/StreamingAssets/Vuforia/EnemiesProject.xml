@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="zombie" size="1.000000 1.000000" />
+    <ImageTarget name="vampire" size="1.000000 1.000000" />
+    <ImageTarget name="spirit" size="1.000000 1.000000" />
+    <ImageTarget name="golem" size="1.000000 1.000000" />
+    <ImageTarget name="goblin" size="1.000000 1.000000" />
+    <ImageTarget name="dragon" size="1.000000 1.000000" />
+  </Tracking>
+</QCARConfig>

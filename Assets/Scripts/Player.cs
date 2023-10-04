@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    enum Class { Paladin, Wizard, Cleric, Rogue, Bard, Barbarian }
+    public enum Class { Paladin, Wizard, Cleric, Rogue, Bard, Barbarian }
 
-    [SerializeField]
-    private Class playerClass;
+    public Class playerClass;
 
     [SerializeField] private Player partner;
 
@@ -35,11 +34,16 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void SetupPlayer()
+    {
         switch (playerClass)
         {
             case Class.Paladin:
-                hp = 10; atk = 2;  def = 2; spe = 1; attackType = 'P'; break;
-            case Class.Wizard: 
+                hp = 10; atk = 2; def = 2; spe = 1; attackType = 'P'; break;
+            case Class.Wizard:
                 hp = 7; atk = 3; def = 1; spe = 2; attackType = 'M'; break;
             case Class.Cleric:
                 hp = 9; atk = 1; def = 2; spe = 1; attackType = 'M'; break;
@@ -52,7 +56,7 @@ public class Player : MonoBehaviour
         }
 
         speedText = gameObject.GetComponentInChildren<TextMeshPro>();
-        
+
         turnHP = hp;
         turnAtk = atk;
         turnDef = def;
